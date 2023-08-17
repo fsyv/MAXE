@@ -1,0 +1,15 @@
+{
+  "name": "maxe",
+  "dependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.17.1",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.3.1",
+    "typescript": "^5.1.6"
+  },
+  "scripts": {
+    "install": "npm install",
+    "pretest": "npx hardhat compile",
+    "test": "npx hardhat test"
+  }
+}
