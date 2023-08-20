@@ -8,7 +8,6 @@
     "typescript": "^5.1.6"
   },
   "scripts": {
-    "install": "npm install",
     "pretest": "npx hardhat compile",
     "test": "npx hardhat test"
   }
