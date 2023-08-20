@@ -203,14 +203,10 @@ function decodePatientID(uint256 _studyID)public view returns(uint256[] memory){
       return patientIDs;
 } 
 
-function  verifyexistenceOFelement(bytes32[] memory categoryNeeded,bytes32[2] memory elementsInDatabase)public pure returns(bool yes){
+function  verifyexistenceOFelement(bytes32[] memory categoryNeeded,bytes32 elementsInDatabase)public pure returns(bool yes){
            bytes32 element;
-           for(uint h=0;h<16;h++){
-            if(h<8){
-                element=getBytes32FromElements(elementsInDatabase[0],h*4);
-            }else{
-                element=getBytes32FromElements(elementsInDatabase[1],(h-8)*4);
-            }
+           for(uint h=0;h<8;h++){
+                element=getBytes32FromElements(elementsInDatabase,h*4);
                 for(uint g=0;g<categoryNeeded.length;g++){
                     if(element==categoryNeeded[g]){
                     return true;
@@ -285,9 +281,8 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
     for (uint i = 0; i < categorySharingChoices.length; i++) {
       shortnumber = getPrefixBytes32forCategory(categorySharingChoices[i]);
       result |= shortnumber >> i * 16;
-     // if(extendCategorys[shortnumber]){
+
       extendCategorys[shortnumber]=categorySharingChoices[i];
-     // }
     }
     return result;
     }
@@ -296,17 +291,17 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
      
 
     //处理elementSharingChoices这个string数组，生成编码好的bytes32并返回
-    function handleelementSharingChoices(string[] calldata elementSharingChoices) public  returns (bytes32[2] memory) {
-    bytes32[2] memory result;
+    function handleelementSharingChoices(string[] calldata elementSharingChoices) public  returns (bytes32[] memory) {
+    bytes32[] memory result=new bytes32[](2);
     bytes32 shortnumber;
     for (uint i = 0; i < elementSharingChoices.length; i++) {
       if(i<8){
       shortnumber = getPrefixBytes32forElement(elementSharingChoices[i]);
-      result[0] |= shortnumber >> (i * 32);
+      result[1] |= shortnumber >> (i * 32);
       extendElements[shortnumber]=elementSharingChoices[i];
       }else{
         shortnumber = getPrefixBytes32forElement(elementSharingChoices[i]);
-        result[1] |= shortnumber >> ((i-8) * 32);
+        result[2] |= shortnumber >> ((i-8) * 32);
         extendElements[shortnumber]=elementSharingChoices[i];
       }
     }
@@ -327,23 +322,13 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
     b4=  bytes32(b[4]);
     return b1 |(b2>>8)|(b3>>16)|(b4>>24);
     }
-    function getPrefixforElement(bytes32[2] memory  b) public pure returns (bytes32[] memory) {
+    function getPrefixforElement(bytes32  b) public pure returns (bytes32[] memory) {
     bytes32 chunk3=bytes32(uint256(4294967295))<<224;
-    bytes32[] memory a=new bytes32[](16);
-    for(uint i=0;i<16;i++){
-      if(i<8){
-        a[i]= b[0] |(chunk3>>32*i);
-        if(a[i]==0){
-            break;
-        }
-        } else{
-        a[i]= b[1] |(chunk3>>32*(i-8));
-        if(a[i]==0){
-            break;
-        }
-        }
+    bytes32[] memory a=new bytes32[](8);
+    for(uint i=0;i<8;i++){
+    a[i]= b |(chunk3>>32*i);
     }
-        return a;
+    return a;
     }
 
    //注：uint256(0x01)<<2 | uint256(0x04) = 0x104 = 260  bytes32(260）=0x0000000000000000000000000000000000000000000000000000000000000104
@@ -467,15 +452,15 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
     }
 
 
-    function stringToFullElementChoices(bytes32[2] memory input) public view returns (string memory) {
+    function stringToFullElementChoices(bytes32 input) public view returns (string memory) {
         bytes32[] memory a;
         string memory result;
         string memory finallyresult;
         a = getPrefixforElement(input);
 
         for (uint256 i = 0; i < a.length; i++) {
-            if(a[i]==0){
-                break;
+            if(a[i].length==0){
+                continue;
             }
             result=extendElements[a[i]];
             finallyresult=string(abi.encodePacked(finallyresult,result));

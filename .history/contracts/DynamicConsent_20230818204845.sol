@@ -285,9 +285,8 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
     for (uint i = 0; i < categorySharingChoices.length; i++) {
       shortnumber = getPrefixBytes32forCategory(categorySharingChoices[i]);
       result |= shortnumber >> i * 16;
-     // if(extendCategorys[shortnumber]){
+
       extendCategorys[shortnumber]=categorySharingChoices[i];
-     // }
     }
     return result;
     }
@@ -333,14 +332,8 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
     for(uint i=0;i<16;i++){
       if(i<8){
         a[i]= b[0] |(chunk3>>32*i);
-        if(a[i]==0){
-            break;
-        }
         } else{
         a[i]= b[1] |(chunk3>>32*(i-8));
-        if(a[i]==0){
-            break;
-        }
         }
     }
         return a;
@@ -474,8 +467,8 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
         a = getPrefixforElement(input);
 
         for (uint256 i = 0; i < a.length; i++) {
-            if(a[i]==0){
-                break;
+            if(a[i].length==0){
+                continue;
             }
             result=extendElements[a[i]];
             finallyresult=string(abi.encodePacked(finallyresult,result));

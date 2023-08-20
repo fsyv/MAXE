@@ -285,9 +285,8 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
     for (uint i = 0; i < categorySharingChoices.length; i++) {
       shortnumber = getPrefixBytes32forCategory(categorySharingChoices[i]);
       result |= shortnumber >> i * 16;
-     // if(extendCategorys[shortnumber]){
+
       extendCategorys[shortnumber]=categorySharingChoices[i];
-     // }
     }
     return result;
     }
@@ -474,7 +473,7 @@ function extractChoicesFromInput(string[] memory inputelement,string[] memory in
         a = getPrefixforElement(input);
 
         for (uint256 i = 0; i < a.length; i++) {
-            if(a[i]==0){
+            if(a[i].length==0){
                 break;
             }
             result=extendElements[a[i]];
