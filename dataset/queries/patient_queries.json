@@ -31,7 +31,7 @@
    },
 {
     "patientID": 6436,
-    "studyID": -1,
+    "studyID": 63,
     "startTimestamp": 1641024000,
     "endTimestamp": 1685602740
    }
