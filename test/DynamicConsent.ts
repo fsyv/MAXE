@@ -22,10 +22,10 @@ describe("DynamicConsent", function () {
 
     // 加载数据集
     let datasets: Array<string> = [
-      "./dataset/consents/1/training_data.json",
-      "./dataset/consents/2/training_data.json",
-      "./dataset/consents/3/training_data.json",
-      "./dataset/consents/4/training_data.json"
+      "./dataset/consents/1/training_data.json"
+      // "./dataset/consents/2/training_data.json",
+      // "./dataset/consents/3/training_data.json",
+      // "./dataset/consents/4/training_data.json"
     ];
 
     for (let dataset of datasets) {
@@ -53,7 +53,42 @@ describe("DynamicConsent", function () {
   // queryForResearcher
   it("queryForResearcher", async function () {
 
+    dynamicConsent = await ethers.deployContract("DynamicConsent");
+    await dynamicConsent.waitForDeployment();
+    console.log(
+      `Contract deployed to ${dynamicConsent.target}`
+    );
+    // 加载数据集
+    let datasets0: Array<string> = [
+      "./dataset/consents/1/training_data.json"
+      // "./dataset/consents/2/training_data.json",
+      // "./dataset/consents/3/training_data.json",
+      // "./dataset/consents/4/training_data.json"
+    ];
 
+    for (let dataset of datasets0) {
+      console.log("Loading dataset: " + dataset);
+
+      let training_data = JSON.parse(fs.readFileSync(dataset));
+      console.log("Loading dataset competed!");
+      // 存储数据
+      console.time("insertion");
+      for (const i in training_data) {
+        console.time("storeRecord: " + dataset + "_" + i);
+        await dynamicConsent.storeRecord(
+          training_data[i]["patientID"],
+          training_data[i]["studyID"],
+          training_data[i]["timestamp"],
+          training_data[i]["categorySharingChoices"],
+          training_data[i]["elementSharingChoices"]
+        );
+        console.timeEnd("storeRecord: " + dataset + "_" + i);
+      }
+      console.timeEnd("insertion");
+    }
+    // let alldata=await dynamicConsent.dataBase;
+    // console.log(alldata);
+    //////////////////////////////////////////////
     // 加载数据集
     let datasets: Array<string> = [
       "./dataset/queries/researcher_queries.json"
@@ -83,8 +118,40 @@ describe("DynamicConsent", function () {
 
   // queryForPatient
   it("queryForPatient", async function () {
-
-
+  
+    dynamicConsent = await ethers.deployContract("DynamicConsent");
+    await dynamicConsent.waitForDeployment();
+    console.log(
+      `Contract deployed to ${dynamicConsent.target}`
+    );
+      // 加载数据集
+      let datasets0: Array<string> = [
+        "./dataset/consents/1/training_data.json"
+        // "./dataset/consents/2/training_data.json",
+        // "./dataset/consents/3/training_data.json",
+        // "./dataset/consents/4/training_data.json"
+      ];
+  
+      for (let dataset of datasets0) {
+        console.log("Loading dataset: " + dataset);
+  
+        let training_data = JSON.parse(fs.readFileSync(dataset));
+        console.log("Loading dataset competed!");
+        // 存储数据
+        console.time("insertion");
+        for (const i in training_data) {
+          console.time("storeRecord: " + dataset + "_" + i);
+          await dynamicConsent.storeRecord(
+            training_data[i]["patientID"],
+            training_data[i]["studyID"],
+            training_data[i]["timestamp"],
+            training_data[i]["categorySharingChoices"],
+            training_data[i]["elementSharingChoices"]
+          );
+          console.timeEnd("storeRecord: " + dataset + "_" + i);
+        }
+        console.timeEnd("insertion");
+      }
     // 加载数据集
     let datasets: Array<string> = [
       "./dataset/queries/patient_queries.json"
