@@ -1,0 +1,39 @@
+[
+{
+ "patientID": 7302,
+ "studyID": 16,
+ "startTimestamp": 1641147380,
+ "endTimestamp": 1685602740
+},
+{
+ "patientID": 8229,
+ "studyID": 86,
+ "startTimestamp": 1641116000,
+ "endTimestamp": -1
+},
+{
+ "patientID": 3797,
+ "studyID": 3,
+ "startTimestamp": 1641024000,
+ "endTimestamp": 1685602740
+},
+{
+    "patientID": 5263,
+    "studyID": -1,
+    "startTimestamp": 1641024000,
+    "endTimestamp": 1685602740
+   },
+{
+    "patientID": 6088,
+    "studyID": -1,
+    "startTimestamp": 1641024000,
+    "endTimestamp": 1685602740
+   },
+{
+    "patientID": 6436,
+    "studyID": 63,
+    "startTimestamp": 1641024000,
+    "endTimestamp": 1685602740
+   }
+]
+

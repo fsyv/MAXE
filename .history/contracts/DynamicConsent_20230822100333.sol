@@ -44,6 +44,10 @@ contract DynamicConsent {
         bytes32 categoryChoices;
         bytes32 elementChoices;
     }
+    struct Patient {
+        Consent[] consent;
+        uint256 leastdata;
+    }
 
     mapping(bytes32 => string) public extendCategorys;
     mapping(bytes32 => string) public extendElements;
@@ -196,9 +200,9 @@ contract DynamicConsent {
     }
     //bool用于判断patient是否为空
     function findTheLatestOne(uint256 _patientID,uint256 _studyID,int256 _endTime) public view returns(uint256,bool ){
-        Consent[] memory patient;
+        Patient memory patient;
         patient=dataBase[_studyID][_patientID];
-        uint256 length=patient.length;
+        uint256 length=patient.consent.length;
         //uint256 index=0;
        
         if (length==0){
@@ -208,7 +212,7 @@ contract DynamicConsent {
             return (length-1,true);
         }
         for(uint256 i=length-1;i>=0;i--){
-            if(patient[i].recordTime<=uint256(_endTime)){
+            if(patient.consent[i].recordTime<=uint256(_endTime)){
                 return (i,true);
             }
         }
@@ -478,19 +482,19 @@ contract DynamicConsent {
 
         if (_studyID == -1) {
             for (uint256 i = 0; i <= 100; i++) {
-                if (dataBase[i][_patientID].length > 0) {
-                        Consent[] memory patient2 = dataBase[i][_patientID];
+                if (dataBase[i][_patientID].consent.length > 0) {
+                    Patient storage patient2 = dataBase[i][_patientID];
 
-                    for (uint256 j = 0; j < patient2.length; j++) {
+                    for (uint256 j = 0; j < patient2.consent.length; j++) {
                         if (
                             uint256(_startTime) <=
-                            patient2[j].recordTime &&
-                            patient2[j].recordTime <= uint256(_endTime)
+                            patient2.consent[j].recordTime &&
+                            patient2.consent[j].recordTime <= uint256(_endTime)
                         ) {
                             output = string(
                                 abi.encodePacked(
                                     output,
-                                    getConsentString(i, patient2[j])
+                                    getConsentString(i, patient2.consent[j])
                                 )
                             );
                             foundConsent = true;
@@ -499,21 +503,21 @@ contract DynamicConsent {
                 }
             }
         } else {
-            if (dataBase[uint256(_studyID)][_patientID].length > 0) {
-                Consent[] memory patient3 = dataBase[uint256(_studyID)][
+            if (dataBase[uint256(_studyID)][_patientID].consent.length > 0) {
+                Patient storage patient3 = dataBase[uint256(_studyID)][
                     _patientID
                 ];
-                for (uint256 j = 0; j < patient3.length; j++) {
+                for (uint256 j = 0; j < patient3.consent.length; j++) {
                     if (
-                        uint256(_startTime) <= patient3[j].recordTime &&
-                        patient3[j].recordTime <= uint256(_endTime)
+                        uint256(_startTime) <= patient3.consent[j].recordTime &&
+                        patient3.consent[j].recordTime <= uint256(_endTime)
                     ) {
                         output = string(
                             abi.encodePacked(
                                 output,
                                 getConsentString(
                                     uint256(_studyID),
-                                    patient3[j]
+                                    patient3.consent[j]
                                 )
                             )
                         );
@@ -530,7 +534,7 @@ contract DynamicConsent {
 
     function getConsentString(
         uint256 _studyID,
-        Consent memory c
+        Consent storage c
     ) internal view returns (string memory) {
         string memory result;
         result = string(

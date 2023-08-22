@@ -44,6 +44,10 @@ contract DynamicConsent {
         bytes32 categoryChoices;
         bytes32 elementChoices;
     }
+    struct Patient {
+        Consent[] consent;
+        uint256 leastdata;
+    }
 
     mapping(bytes32 => string) public extendCategorys;
     mapping(bytes32 => string) public extendElements;
