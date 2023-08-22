@@ -60,7 +60,7 @@ describe("DynamicConsent", function () {
     );
     // 加载数据集
     let datasets0: Array<string> = [
-      "./dataset/consents/1/training_data0.json"
+      "./dataset/consents/1/training_data.json"
       // "./dataset/consents/2/training_data.json",
       // "./dataset/consents/3/training_data.json",
       // "./dataset/consents/4/training_data.json"
@@ -126,7 +126,7 @@ describe("DynamicConsent", function () {
     );
       // 加载数据集
       let datasets0: Array<string> = [
-        "./dataset/consents/1/training_data0.json"
+        "./dataset/consents/1/training_data.json"
         // "./dataset/consents/2/training_data.json",
         // "./dataset/consents/3/training_data.json",
         // "./dataset/consents/4/training_data.json"

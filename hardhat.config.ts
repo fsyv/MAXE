@@ -32,7 +32,10 @@ const config: HardhatUserConfig = {
   },
   gasReporter: {
     enabled: true,
-  }
+  },
+  mocha: {
+    timeout: 1000000
+  },
 };
 
 export default config;
