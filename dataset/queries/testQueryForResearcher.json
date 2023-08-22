@@ -1,0 +1,16 @@
+[
+    {
+     "studyID": 3,
+     "timestamp": 1641147000,
+     "categorySharingChoices": [
+      "03_Living Environment and Lifestyle",
+      "04_Biospecimen",
+      "05_Socioeconomic Status",
+      "07_Laboratory Test Results"
+     ],
+     "elementSharingChoices": [
+      "01_02_Mental health disease or condition",
+      "01_03_Sexual or reproductive disease or condition"
+     ]
+    }
+]
