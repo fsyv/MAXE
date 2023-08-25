@@ -1,14 +1,14 @@
 [
     {
      "patientID": 9319,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641024390,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 8837,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641026818,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -22,7 +22,7 @@
     },
     {
      "patientID": 9319,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641027410,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -40,7 +40,7 @@
     },
     {
      "patientID": 8473,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641027561,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -56,7 +56,7 @@
     },
     {
      "patientID": 3106,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641027596,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -72,7 +72,7 @@
     },
     {
      "patientID": 5313,
-     "studyID": 58,
+     "studyID": 99,
      "timestamp": 1641027682,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -87,14 +87,14 @@
     },
     {
      "patientID": 6179,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641027764,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 9662,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641029766,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -109,7 +109,7 @@
     },
     {
      "patientID": 3448,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641031638,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -124,7 +124,7 @@
     },
     {
      "patientID": 2617,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641033115,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -139,14 +139,14 @@
     },
     {
      "patientID": 3448,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641033480,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 9662,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641034293,
      "categorySharingChoices": [
       "05_Socioeconomic Status",
@@ -159,7 +159,7 @@
     },
     {
      "patientID": 5724,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641034966,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -171,7 +171,7 @@
     },
     {
      "patientID": 6179,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641035214,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -188,14 +188,14 @@
     },
     {
      "patientID": 8867,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641036167,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 6604,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641037691,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -210,14 +210,14 @@
     },
     {
      "patientID": 8748,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641038682,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 2617,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641040510,
      "categorySharingChoices": [],
      "elementSharingChoices": []
@@ -236,7 +236,7 @@
     },
     {
      "patientID": 5263,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641040984,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -253,14 +253,14 @@
     },
     {
      "patientID": 8748,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641041224,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 8748,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641041228,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -275,7 +275,7 @@
     },
     {
      "patientID": 9456,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641041940,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -292,7 +292,7 @@
     },
     {
      "patientID": 5724,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641042424,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -307,7 +307,7 @@
     },
     {
      "patientID": 8473,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641043523,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -322,7 +322,7 @@
     },
     {
      "patientID": 4866,
-     "studyID": 2,
+     "studyID": 99,
      "timestamp": 1641043710,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -337,7 +337,7 @@
     },
     {
      "patientID": 8787,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641044039,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -353,7 +353,7 @@
     },
     {
      "patientID": 8867,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641044160,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -367,7 +367,7 @@
     },
     {
      "patientID": 8837,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641044585,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -382,7 +382,7 @@
     },
     {
      "patientID": 6501,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641045603,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -414,7 +414,7 @@
     },
     {
      "patientID": 5724,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641047653,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle"
@@ -425,7 +425,7 @@
     },
     {
      "patientID": 8837,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641047887,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -439,7 +439,7 @@
     },
     {
      "patientID": 9456,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641049011,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -454,14 +454,14 @@
     },
     {
      "patientID": 5724,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641049243,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 4112,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641049292,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -476,21 +476,21 @@
     },
     {
      "patientID": 2617,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641049404,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 3106,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641049670,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 6604,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641050024,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -505,28 +505,28 @@
     },
     {
      "patientID": 5669,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641050190,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 8473,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641050341,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 3448,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641050428,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 5764,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641050496,
      "categorySharingChoices": [
       "01_Family Health History"
@@ -539,21 +539,21 @@
     },
     {
      "patientID": 9456,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641051175,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 4112,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641051222,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 8867,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641051354,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -568,21 +568,21 @@
     },
     {
      "patientID": 8867,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641051742,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 8787,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641051861,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 8787,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641051865,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -598,7 +598,7 @@
     },
     {
      "patientID": 4112,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641051941,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -614,14 +614,14 @@
     },
     {
      "patientID": 5669,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641052383,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 4112,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641052419,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -636,14 +636,14 @@
     },
     {
      "patientID": 8748,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641052621,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 2617,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053054,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -660,7 +660,7 @@
     },
     {
      "patientID": 5263,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053156,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -676,14 +676,14 @@
     },
     {
      "patientID": 3106,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053314,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 5263,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053330,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -698,7 +698,7 @@
     },
     {
      "patientID": 5669,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053530,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -713,7 +713,7 @@
     },
     {
      "patientID": 5669,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053606,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -728,14 +728,14 @@
     },
     {
      "patientID": 5263,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053613,
      "categorySharingChoices": [],
      "elementSharingChoices": []
     },
     {
      "patientID": 3797,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053622,
      "categorySharingChoices": [
       "02_Current or Previous Disease or Condition",
@@ -751,7 +751,7 @@
     },
     {
      "patientID": 9456,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053624,
      "categorySharingChoices": [
       "03_Living Environment and Lifestyle",
@@ -770,7 +770,7 @@
     },
     {
      "patientID": 1371,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053654,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -785,7 +785,7 @@
     },
     {
      "patientID": 3797,
-     "studyID": 3,
+     "studyID": 99,
      "timestamp": 1641053683,
      "categorySharingChoices": [],
      "elementSharingChoices": []
@@ -872,7 +872,7 @@
     },
     {
      "patientID": 2955,
-     "studyID": 29,
+     "studyID": 99,
      "timestamp": 1641071581,
      "categorySharingChoices": [],
      "elementSharingChoices": []
@@ -946,7 +946,7 @@
     },
     {
      "patientID": 6604,
-     "studyID": 29,
+     "studyID": 99,
      "timestamp": 1641093744,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -1008,7 +1008,7 @@
     },
     {
      "patientID": 3797,
-     "studyID": 38,
+     "studyID": 99,
      "timestamp": 1641110902,
      "categorySharingChoices": [
       "01_Family Health History",
@@ -1066,7 +1066,7 @@
     },
     {
      "patientID": 5263,
-     "studyID": 29,
+     "studyID": 99,
      "timestamp": 1641122069,
      "categorySharingChoices": [
       "01_Family Health History",

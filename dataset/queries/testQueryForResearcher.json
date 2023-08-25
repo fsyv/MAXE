@@ -12,5 +12,24 @@
       "01_02_Mental health disease or condition",
       "01_03_Sexual or reproductive disease or condition"
      ]
-    }
+    },
+    {
+        "studyID": 42,
+        "timestamp": 1640162583,
+        "categorySharingChoices": [
+        ],
+        "elementSharingChoices": [
+        ]
+       },
+       {
+        "studyID": 43,
+        "timestamp": 1641169257,
+        "categorySharingChoices": [
+        ],
+        "elementSharingChoices": [
+            "02_02_Substance abuse related disease or condition",
+            "04_01_Tissue",
+            "06_03_Specialty of the hospital or clinic"
+        ]
+       }
 ]

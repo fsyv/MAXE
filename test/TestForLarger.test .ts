@@ -8,14 +8,14 @@ import {
   const fs = require("fs");
   // import { DynamicConsent } from "../typechain-types";
   
-  describe("DynamicConsent", function () {
+  describe("DynamicConsentLarger", function () {
     let dynamicConsent;
   
 
     // queryForResearcher
     it("totallyTest", async function () {
   
-      dynamicConsent = await ethers.deployContract("DynamicConsent");
+      dynamicConsent = await ethers.deployContract("DynamicConsentLarger");
       await dynamicConsent.waitForDeployment();
       console.log(
         `Contract deployed to ${dynamicConsent.target}`

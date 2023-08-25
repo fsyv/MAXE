@@ -65,5 +65,63 @@
         "02_01_Mental health disease or condition",
         "06_01_Visit dates",
         "06_02_Name of physician"]
+       },
+       {
+        "patientID": 1417,
+        "studyID": 42,
+        "timestamp": 1640162583,
+        "categorySharingChoices": [ 
+        "01_Family Health History",
+        "02_Current or Previous Disease or Condition",
+        "03_Living Environment and Lifestyle",
+        "04_Biospecimen",
+        "05_Socioeconomic Status",
+        "07_Laboratory Test Results"
+        ],
+        "elementSharingChoices": []
+       },
+       {
+        "patientID": 1417,
+        "studyID": 43,
+        "timestamp": 1641163257,
+        "categorySharingChoices": [
+            "02_Current or Previous Disease or Condition",
+            "03_Living Environment and Lifestyle",
+            "04_Biospecimen",
+            "05_Socioeconomic Status",
+            "06_Health Care Encounter"
+        ],
+        "elementSharingChoices": [
+            
+        ]
+       },
+       {
+        "patientID": 1417,
+        "studyID": 43,
+        "timestamp": 1641173257,
+        "categorySharingChoices": [
+            "02_Current or Previous Disease or Condition",
+            "03_Living Environment and Lifestyle",
+            "04_Biospecimen",
+            "05_Socioeconomic Status"
+
+        ],
+        "elementSharingChoices": [
+            
+        ]
+       },
+       {
+        "patientID": 1417,
+        "studyID": 42,
+        "timestamp": 1642163257,
+        "categorySharingChoices": [
+         "01_Family Health History",
+         "02_Current or Previous Disease or Condition",
+         "04_Biospecimen",
+         "05_Socioeconomic Status",
+         "06_Health Care Encounter",
+         "07_Laboratory Test Results"
+        ],
+        "elementSharingChoices": []
        }
 ]
