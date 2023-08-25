@@ -257,14 +257,14 @@ contract DynamicConsent {
                 patientID = uint256(
                     (patientIDsEncode[i] >> (16 * j)) & (chunk)
                 );
-                //if(patientID==0)break;
+                if(patientID==0)break;
                 if (!isPresent[patientID]) {
                     patientIDs[counter] = patientID;
                     isPresent[patientID] = true;
                     counter++;
                 }
             }
-            //if(patientID==0)break;
+            if(patientID==0)break;
         }
         assembly {
             // 获取原数组的长度位置

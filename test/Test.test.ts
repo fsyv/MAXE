@@ -22,7 +22,7 @@ import {
       );
       // 加载数据集
       let datasets0: Array<string> = [
-        "./dataset/consents/1/testData.json"
+        "./dataset/consents/1/training_data0.json"
       ];
   
       for (let dataset of datasets0) {
