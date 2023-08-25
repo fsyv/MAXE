@@ -8,21 +8,21 @@ import {
   const fs = require("fs");
   // import { DynamicConsent } from "../typechain-types";
   
-  describe("DynamicConsent", function () {
+  describe("DynamicConsentLarger", function () {
     let dynamicConsent;
   
 
     // queryForResearcher
     it("totallyTest", async function () {
   
-      dynamicConsent = await ethers.deployContract("DynamicConsent");
+      dynamicConsent = await ethers.deployContract("DynamicConsentLarger");
       await dynamicConsent.waitForDeployment();
       console.log(
         `Contract deployed to ${dynamicConsent.target}`
       );
       // 加载数据集
       let datasets0: Array<string> = [
-        "./dataset/consents/1/training_data0.json"
+        "./dataset/consents/1/testData.json"
       ];
   
       for (let dataset of datasets0) {

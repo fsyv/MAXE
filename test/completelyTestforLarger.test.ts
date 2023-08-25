@@ -8,14 +8,14 @@ import {
   const fs = require("fs");
   // import { DynamicConsent } from "../typechain-types";
   
-  describe("DynamicConsent", function () {
+  describe("DynamicConsentLarger", function () {
     let dynamicConsent;
   
 
     // queryForResearcher
     it("totallyTest", async function () {
   
-      dynamicConsent = await ethers.deployContract("DynamicConsent");
+      dynamicConsent = await ethers.deployContract("DynamicConsentLarger");
       await dynamicConsent.waitForDeployment();
       console.log(
         `Contract deployed to ${dynamicConsent.target}`
@@ -49,8 +49,6 @@ import {
     
                 console.log(dataset + "_total: " + training_data.length + ", consume time: " + consumeTime + "ms, average time: " + consumeTime / training_data.length + "ms.");
             }
-            let a=await dynamicConsent.getPatient(42,6782);
-            console.log('a:',a)
       // let alldata=await dynamicConsent.dataBase;
       // console.log(alldata);
       //////////////////////////////////////////////

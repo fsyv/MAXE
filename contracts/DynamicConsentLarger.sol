@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-
+//可以处理PatientID最大为100000的版本
 pragma solidity =0.8.12;
 
 /**
@@ -22,7 +22,7 @@ pragma solidity =0.8.12;
  *	No change to function declarations is allowed.
  */
 
-contract DynamicConsent {
+contract DynamicConsentLarger {
     /**
      *   If a WILDCARD (-1) is received as function parameter, it means any value is accepted.
      *   For example, if _studyID = -1 in queryForPatient,
@@ -134,7 +134,7 @@ contract DynamicConsent {
 
         return patientIDs;
     }
-    
+
     function extractChoicesFromInput(
         string[] memory inputelement,
         string[] memory inputCategory
@@ -157,6 +157,42 @@ contract DynamicConsent {
         return (requiredElements, categorysfromqueryout,categorysforElementFromquery);
     }
 
+
+    function decodePatientID(
+        uint256 _studyID
+    ) public view returns (uint256[] memory) {
+        bytes32 chunk = bytes32(uint256(4294967295));
+        bytes32[] memory patientIDsEncode = patientsOfStudy[_studyID].patientIDs;
+        uint256 length = patientIDsEncode.length;
+        uint256 patientID;
+       // bool[100000] memory isPresent;  //仅能处理PatientID最大为100000000的情况
+        uint256 counter;
+        uint256[] memory patientIDs = new uint256[](
+            8 * patientIDsEncode.length
+        );
+         
+        for (uint i = 0; i < length; i++) {
+            for (uint j = 0; j < 8; j++) {
+                patientID = uint256(
+                    (patientIDsEncode[i] >> (32 * j)) & (chunk)
+                );
+                if(patientID==0)break;
+                //if (!isPresent[patientID]) {
+                    patientIDs[counter] = patientID;
+                //    isPresent[patientID] = true;
+                    counter++;
+              //  }
+            }
+            if(patientID==0)break;
+        }
+        assembly {
+            // 获取原数组的长度位置
+            let oldLengthPtr := patientIDs
+            // 修改长度值
+            mstore(oldLengthPtr, counter)
+        }
+        return patientIDs;
+    }
     function getPatientIDs(
         uint256[] memory _patientIDs,
         uint256 _studyID,
@@ -229,51 +265,16 @@ contract DynamicConsent {
         }
         if(_endTime<0){
             return (length-1,true);
-        }else{
+        }
         for(uint256 i=length-1;i>=0;i--){
             if(patient[i].recordTime<=uint256(_endTime)){
                 return (i,true);
             }
         }
-        }
         return (0,false);
     }
     
-    function decodePatientID(
-        uint256 _studyID
-    ) public view returns (uint256[] memory) {
-        bytes32 chunk = bytes32(uint256(65535));
-        bytes32[] memory patientIDsEncode = patientsOfStudy[_studyID]
-            .patientIDs;
-        uint256 length = patientIDsEncode.length;
-        uint256 patientID;
-        bool[2 ** 16 - 1] memory isPresent;
-        uint256 counter;
-        uint256[] memory patientIDs = new uint256[](
-            16 * patientIDsEncode.length
-        );
-        for (uint i = 0; i < length; i++) {
-            for (uint j = 0; j < 16; j++) {
-                patientID = uint256(
-                    (patientIDsEncode[i] >> (16 * j)) & (chunk)
-                );
-                if(patientID==0)break;
-                if (!isPresent[patientID]) {
-                    patientIDs[counter] = patientID;
-                    isPresent[patientID] = true;
-                    counter++;
-                }
-            }
-            if(patientID==0)break;
-        }
-        assembly {
-            // 获取原数组的长度位置
-            let oldLengthPtr := patientIDs
-            // 修改长度值
-            mstore(oldLengthPtr, counter)
-        }
-        return patientIDs;
-    }
+
 
     function verifyexistenceOFcategory(
         bytes32[] memory categoryNeeded,
@@ -436,8 +437,7 @@ contract DynamicConsent {
     //插入patientID到patientsOfStudy中
     function insertPatientID(uint256 _patientID, uint256 _studyID) public {
         uint256 flag = patientsOfStudy[_studyID].flag;
-
-        if (flag <= 15) {
+        if (flag <= 7) {
             uint256 length = patientsOfStudy[_studyID].patientIDs.length;
             if (length == 0) {
                 patientsOfStudy[_studyID].patientIDs.push(bytes32(_patientID));
@@ -447,7 +447,7 @@ contract DynamicConsent {
                 ];
                 patientsOfStudy[_studyID].patientIDs[length - 1] =
                     patientIDs |
-                    (bytes32(_patientID) << (16 * flag));
+                    (bytes32(_patientID) << (32 * flag));
             }
             patientsOfStudy[_studyID].flag = flag + 1;
         } else {
@@ -651,9 +651,5 @@ contract DynamicConsent {
         }
         return a;
     }
-    function getPatient(uint256 studyID,uint256 PatientID) public returns (Consent[] memory){
-        Consent[] memory output;
-        output=dataBase[studyID][PatientID];
-        return output;
-    }
+
 }
