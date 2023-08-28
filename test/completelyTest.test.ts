@@ -49,8 +49,11 @@ import {
     
                 console.log(dataset + "_total: " + training_data.length + ", consume time: " + consumeTime + "ms, average time: " + consumeTime / training_data.length + "ms.");
             }
-            let a=await dynamicConsent.getPatient(42,6782);
-            console.log('a:',a)
+
+     
+
+
+
       // let alldata=await dynamicConsent.dataBase;
       // console.log(alldata);
       //////////////////////////////////////////////

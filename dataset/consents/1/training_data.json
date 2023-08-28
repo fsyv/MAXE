@@ -1153,7 +1153,8 @@
       "04_01_Tissue",
       "06_03_Specialty of the hospital or clinic"
      ]
-    },
+    }
+    ,
     {
      "patientID": 9618,
      "studyID": 63,

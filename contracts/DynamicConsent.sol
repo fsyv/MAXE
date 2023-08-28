@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity =0.8.12;
+pragma solidity >=0.8.12;
 
 /**
  * Team Name:  Maxe
@@ -30,7 +30,7 @@ contract DynamicConsent {
      *	regardless of studyID.
      */
     int256 private constant WILDCARD = -1;
-    uint256  MaxStudyID=1;
+    uint256  MaxStudyID=100;
     // studyID=> patientID  => Patient 数据
     mapping(uint256 => mapping(uint256 => Consent[] )) public dataBase;
     // Patient  patient;
@@ -142,13 +142,14 @@ contract DynamicConsent {
         bytes32[] memory requiredElements = new bytes32[](inputelement.length);
         bytes32[] memory categorysforElementFromquery=new bytes32[](inputelement.length);
         bytes32[] memory categorysfromqueryout = new bytes32[]( inputCategory.length);
-        uint256 length = inputCategory.length;
-        for (uint j = 0; j < length; j++) {
+        uint256 lengthCategory = inputCategory.length;
+        uint256 lengthElement =  inputelement.length;
+        for (uint j = 0; j < lengthCategory; j++) {
             categorysfromqueryout[j] = getPrefixBytes32forCategory(
                 inputCategory[j]
             );
         }
-        for (uint i = 0; i < inputelement.length; i++) {
+        for (uint i = 0; i < lengthElement; i++) {
             categorysforElementFromquery[i] = getPrefixBytes32forCategory(
                 inputelement[i]
             );
@@ -247,7 +248,7 @@ contract DynamicConsent {
             .patientIDs;
         uint256 length = patientIDsEncode.length;
         uint256 patientID;
-        bool[2 ** 16 - 1] memory isPresent;
+        bool[10000] memory isPresent;
         uint256 counter;
         uint256[] memory patientIDs = new uint256[](
             16 * patientIDsEncode.length
@@ -650,10 +651,5 @@ contract DynamicConsent {
             mstore(oldLengthPtr, counter)
         }
         return a;
-    }
-    function getPatient(uint256 studyID,uint256 PatientID) public returns (Consent[] memory){
-        Consent[] memory output;
-        output=dataBase[studyID][PatientID];
-        return output;
     }
 }

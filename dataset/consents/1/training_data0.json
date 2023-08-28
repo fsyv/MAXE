@@ -65,7 +65,8 @@
         "02_01_Mental health disease or condition",
         "06_01_Visit dates",
         "06_02_Name of physician"]
-       },
+       }
+       ,
        {
         "patientID": 5,
         "studyID": 42,
