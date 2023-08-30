@@ -22,7 +22,7 @@ pragma solidity >=0.8.12;
  *	No change to function declarations is allowed.
  */
 
-contract DynamicConsent {
+contract DynamicConsent0 {
     /**
      *   If a WILDCARD (-1) is received as function parameter, it means any value is accepted.
      *   For example, if _studyID = -1 in queryForPatient,
@@ -248,7 +248,7 @@ contract DynamicConsent {
             .patientIDs;
         uint256 length = patientIDsEncode.length;
         uint256 patientID;
-        bool[10000] memory isPresent;
+        bool[65535] memory isPresent;
         uint256 counter;
         uint256[] memory patientIDs = new uint256[](
             16 * patientIDsEncode.length
@@ -467,7 +467,7 @@ contract DynamicConsent {
             _startTime = 0;
         }
         if (_endTime == -1) {
-            _endTime = 9999999999;
+            _endTime = 99999999999;
         }
         if (_studyID == -1) {
             for (uint256 i = 0; i <= MaxStudyID; i++) {

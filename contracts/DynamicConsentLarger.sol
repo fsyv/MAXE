@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 //可以处理PatientID最大为100000的版本
-pragma solidity =0.8.12;
+pragma solidity >=0.8.12;
 
 /**
  * Team Name:  Maxe
@@ -22,7 +22,7 @@ pragma solidity =0.8.12;
  *	No change to function declarations is allowed.
  */
 
-contract DynamicConsentLarger {
+contract DynamicConsentLarger1 {
     /**
      *   If a WILDCARD (-1) is received as function parameter, it means any value is accepted.
      *   For example, if _studyID = -1 in queryForPatient,
@@ -30,7 +30,7 @@ contract DynamicConsentLarger {
      *	regardless of studyID.
      */
     int256 private constant WILDCARD = -1;
-    uint256  MaxStudyID=1;
+    uint256  MaxStudyID=100;
     // studyID=> patientID  => Patient 数据
     mapping(uint256 => mapping(uint256 => Consent[] )) public dataBase;
     // Patient  patient;
@@ -165,7 +165,7 @@ contract DynamicConsentLarger {
         bytes32[] memory patientIDsEncode = patientsOfStudy[_studyID].patientIDs;
         uint256 length = patientIDsEncode.length;
         uint256 patientID;
-       // bool[100000] memory isPresent;  //仅能处理PatientID最大为100000000的情况
+        bool[100000] memory isPresent;  //仅能处理PatientID最大为100000的情况
         uint256 counter;
         uint256[] memory patientIDs = new uint256[](
             8 * patientIDsEncode.length
@@ -177,11 +177,11 @@ contract DynamicConsentLarger {
                     (patientIDsEncode[i] >> (32 * j)) & (chunk)
                 );
                 if(patientID==0)break;
-                //if (!isPresent[patientID]) {
+                if (!isPresent[patientID]) {
                     patientIDs[counter] = patientID;
-                //    isPresent[patientID] = true;
+                    isPresent[patientID] = true;
                     counter++;
-              //  }
+               }
             }
             if(patientID==0)break;
         }
@@ -209,7 +209,7 @@ contract DynamicConsentLarger {
         bool empty;
         uint256 index;
         for (uint i = 0; i < length; i++) {
-            //if (_patientIDs[i] == 0) break;  //如果patientID为0，说明已经到了最后一个，直接跳出循环
+            if (_patientIDs[i] == 0) break;  //如果patientID为0，说明已经到了最后一个，直接跳出循环
             (index,empty)=findTheLatestOne(_patientIDs[i],_studyID,_endTime);
             if (empty==false){
                 continue;
