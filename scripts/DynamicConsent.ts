@@ -4,10 +4,37 @@ type Consent = {
   recordTime: number;
   patientCategoryChoices: string[];
   patientElementChoices: string[];
+  choices: number[];
 };
 
 // studyID : patientID  : Consent[]
 const dataBase: Record<number, Record<number, Consent[]>> = {};
+
+function preprocessing(
+  _patientCategoryChoices: string[],
+  _patientElementChoices: string[]
+): number[] {
+
+  let choices: number[] = [];
+
+  for (let patientCategoryChoices of _patientCategoryChoices) {
+    const numbers = patientCategoryChoices.split("_");
+    if (numbers.length >= 2) {
+      choices.push(Number(numbers[0]));
+    }
+  }
+
+  for (let patientElementChoices of _patientElementChoices) {
+    const numbers = patientElementChoices.split("_");
+    if (numbers.length >= 3) {
+      choices.push(Number(numbers[0]) * 100 + Number(numbers[1]));
+    }
+  }
+
+  choices.sort();
+
+  return choices;
+}
 
 export function storeRecord(
   _patientID: number,
@@ -20,15 +47,14 @@ export function storeRecord(
     recordTime: _recordTime,
     patientCategoryChoices: _patientCategoryChoices,
     patientElementChoices: _patientElementChoices,
+    choices: preprocessing(_patientCategoryChoices, _patientElementChoices)
   }
 
-  if(!dataBase[_studyID])
-  {
+  if (!dataBase[_studyID]) {
     dataBase[_studyID] = {};
   }
 
-  if(!dataBase[_studyID][_patientID])
-  {
+  if (!dataBase[_studyID][_patientID]) {
     dataBase[_studyID][_patientID] = [];
   }
 
@@ -45,49 +71,48 @@ export function queryForResearcher(
   let patientIDs: string[] = [];
   const study = dataBase[_studyID];
 
+  let requestedChoices: number[] = [];
+
+  for (let requestedCategoryChoices of _requestedCategoryChoices) {
+    const numbers = requestedCategoryChoices.split("_");
+    if (numbers.length >= 2) {
+      requestedChoices.push(Number(numbers[0]));
+    }
+  }
+
+  for (let requestedElementChoices of _requestedElementChoices) {
+    const numbers = requestedElementChoices.split("_");
+    if (numbers.length >= 3) {
+      requestedChoices.push(Number(numbers[0]) * 100 + Number(numbers[1]));
+    }
+  }
+
   for (const patientID in study) {
 
     if (study.hasOwnProperty(patientID)) {
 
       const consents = study[patientID];
+
+      consents.sort((a: Consent, b: Consent) => b.recordTime - a.recordTime);
+
       for (let consent of consents) {
-        if(_endTime != -1 && consent.recordTime > _endTime)
-        {
+        if (_endTime != -1 && consent.recordTime > _endTime) {
           break;
         }
 
-        let categoryChoicesCount = 0;
-        for(let categoryChoices of consent.patientCategoryChoices)
-        {
-          if(!_requestedCategoryChoices.includes(categoryChoices))
-          {
+        let contains = true;
+        for (let requestedChoice of requestedChoices) {
+          if (!consent.choices.includes(requestedChoice) && !consent.choices.includes(Math.floor(requestedChoice / 100))) {
+            // 不包含
+            contains = false;
             break;
           }
-
-          categoryChoicesCount++;
         }
 
-        if(categoryChoicesCount != _requestedCategoryChoices.length)
-        {
+        if (contains) {
+          patientIDs.push(patientID);
           break;
         }
-
-        let elementSharingChoicesCount = 0;
-        for(let elementChoices of consent.patientElementChoices)
-        {
-          if(!_requestedElementChoices.includes(elementChoices))
-          {
-            break;
-          }
-
-          elementSharingChoicesCount++;
-        }
-        if(elementSharingChoicesCount != _requestedElementChoices.length)
-        {
-          break;
-        }
-
-        patientIDs.push(patientID)
       }
     }
   }

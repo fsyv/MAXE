@@ -65,7 +65,7 @@ describe("DynamicConsent", function () {
                     training_data[i]["elementSharingChoices"]
                 );
 
-                console.log(i);
+                // console.log(i);
             }
 
             console.log(dataset + "_total: " + training_data.length);
