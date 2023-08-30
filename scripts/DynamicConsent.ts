@@ -100,6 +100,7 @@ export function queryForResearcher(
           break;
         }
 
+        //这后面的代码只用执行一次
         let contains = true;
         for (let requestedChoice of requestedChoices) {
           if (!consent.choices.includes(requestedChoice) && !consent.choices.includes(Math.floor(requestedChoice / 100))) {
@@ -111,8 +112,8 @@ export function queryForResearcher(
 
         if (contains) {
           patientIDs.push(patientID);
-          break;
         }
+        break;
       }
     }
   }
