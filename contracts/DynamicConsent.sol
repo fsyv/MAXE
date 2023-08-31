@@ -1,19 +1,17 @@
 // SPDX-License-Identifier: GPL-3.0
-
-pragma solidity =0.8.12;
+pragma solidity >=0.8.12;
 
 /**
  * Team Name:  Maxe
  *
  *   Team Member 1:
- *       { Name:  , Email:  }
+ *       { Name: ZibinLin, Email: linaacc9595[#AT#]gmail.com }
  *   Team Member 2:
- *       { Name: , Email:  }
+ *       { Name: KunlongZhong, Email: Zkimhom18[#AT#]gmail.com }
  *   Team Member 3:
- *       { Name: , Email:  }
- *	...
- *   Team Member n:
- *       { Name: , Email:  }
+ *       { Name: JinyuChen, Email: fsyv.me[#AT#]gmail.com }
+ *   Team Member 4:
+ *       { Name: GuanningSu, Email: guanningsu[#AT#]qq.com }
  *
  * Declaration of cross-team collaboration:
  *	We DO/DO NOT collaborate with (list teams).
@@ -22,32 +20,27 @@ pragma solidity =0.8.12;
  *	No change to function declarations is allowed.
  */
 
-contract DynamicConsent {
-    /**
-     *   If a WILDCARD (-1) is received as function parameter, it means any value is accepted.
-     *   For example, if _studyID = -1 in queryForPatient,
-     *	then we expected all consents made by the patient within the appropriate time frame
-     *	regardless of studyID.
-     */
-    int256 private constant WILDCARD = -1;
-    uint256  MaxStudyID=1;
+contract DynamicConsent{
+
     // studyID=> patientID  => Patient 数据
     mapping(uint256 => mapping(uint256 => Consent[] )) public dataBase;
     // Patient  patient;
     mapping(uint256 => patientsEncode) public patientsOfStudy;
+    mapping(uint256=>mapping(uint256 => bool)) patientIDinstudy;
     struct patientsEncode {
         bytes32[] patientIDs;
-        uint256 flag; //flag为0到15，表示patientIDs[length-1]已编码进去的patientID的个数
+        uint256 flag; //flag为0到7，表示patientIDs[length-1]已编码进去的patientID的个数
     }
     struct Consent {
         uint256 recordTime;
         bytes32 categoryChoices;
+        bytes32 categoryChoicesNum;
         bytes32 elementChoices;
     }
 
     mapping(bytes32 => string) public extendCategorys;
     mapping(bytes32 => string) public extendElements;
-
+    mapping(uint256=>uint256[]) public studyIDofPatient;
     /**
      *   Function Description:
      *	Given a patientID, studyID, recordTime, consented category choices, and consented element choices,
@@ -66,15 +59,18 @@ contract DynamicConsent {
         string[] calldata _patientCategoryChoices,
         string[] calldata _patientElementChoices
     ) public {
-        if(_studyID>MaxStudyID)MaxStudyID=_studyID;
         // 获取Patient对象的引用，避免重复的mapping查找操作
         Consent[] storage patient1 = dataBase[_studyID][_patientID];
         // 创建新的Consent对象并推入数组
+        bytes32 categoryChoices0;
+        bytes32 categoryChoices1;
+        (categoryChoices0,categoryChoices1)=handlecategorySharingChoices(
+                _patientCategoryChoices
+            );
         Consent memory newConsent = Consent({
             recordTime: _recordTime,
-            categoryChoices: handlecategorySharingChoices(
-                _patientCategoryChoices
-            ),
+            categoryChoices: categoryChoices0,
+            categoryChoicesNum: categoryChoices1,
             elementChoices: handleelementSharingChoices(_patientElementChoices)
         });
         patient1.push(newConsent);
@@ -82,7 +78,11 @@ contract DynamicConsent {
         dataBase[_studyID][_patientID] = patient1;
         // patient=dataBase[_studyID][_patientID];
         // 调用插入PatientID的函数
-        insertPatientID(_patientID, _studyID);
+        if(!patientIDinstudy[_studyID][_patientID]){
+            insertPatientID(_patientID, _studyID);
+            studyIDofPatient[_patientID].push(_studyID);
+            patientIDinstudy[_studyID][_patientID]=true;
+        }
     }
 
     /**
@@ -114,8 +114,8 @@ contract DynamicConsent {
         uint256[] memory patientIDs;
         //uint256[] memory patientIDsforRequry;
         bytes32[] memory Elementsfromquery;
-        bytes32[] memory Categorysfromquery;
-        bytes32[] memory categorysforElementFromquery;
+        bytes32 Categorysfromquery;
+        uint256[] memory categorysforElementFromquery;
         // Categorysfromquery=extractchoicefromInputCategory(_requestedCategoryChoices);
         (Elementsfromquery, Categorysfromquery, categorysforElementFromquery) = extractChoicesFromInput(
             _requestedElementChoices,
@@ -138,31 +138,41 @@ contract DynamicConsent {
     function extractChoicesFromInput(
         string[] memory inputelement,
         string[] memory inputCategory
-    ) public pure returns (bytes32[] memory, bytes32[] memory,bytes32[] memory) {
+    ) public pure returns (bytes32[] memory, bytes32,uint256[] memory) {
         bytes32[] memory requiredElements = new bytes32[](inputelement.length);
-        bytes32[] memory categorysforElementFromquery=new bytes32[](inputelement.length);
-        bytes32[] memory categorysfromqueryout = new bytes32[]( inputCategory.length);
-        uint256 length = inputCategory.length;
-        for (uint j = 0; j < length; j++) {
-            categorysfromqueryout[j] = getPrefixBytes32forCategory(
-                inputCategory[j]
-            );
-        }
-        for (uint i = 0; i < inputelement.length; i++) {
-            categorysforElementFromquery[i] = getPrefixBytes32forCategory(
+        uint256[] memory categoryQueryofElement=new uint256[](inputelement.length);
+        bytes32 categoryQuery;
+        uint256 lengthElement =  inputelement.length;
+        categoryQuery=extractcategory(inputCategory);
+        for (uint i = 0; i < lengthElement; i++) {
+                categoryQueryofElement[i] = getPrefixBytes32forCategoryForelement(
                 inputelement[i]
             );
             requiredElements[i] = getPrefixBytes32forElement(inputelement[i]);
         }
-        return (requiredElements, categorysfromqueryout,categorysforElementFromquery);
+        return (requiredElements, categoryQuery,categoryQueryofElement);
+    }
+    function extractcategory(string[] memory inputCategory)public pure returns(bytes32){
+       
+        bytes32 allff=0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+        uint256 number;
+        bytes32 zero=0xff00000000000000000000000000000000000000000000000000000000000000;
+        uint256 length=inputCategory.length;
+        for (uint i = 0; i < length; i++) {
+            number = getPrefixBytes32forCategoryToinput(
+                inputCategory[i]
+            );
+            allff ^= zero >> (number * 8); 
+        }
+        return allff;
     }
 
     function getPatientIDs(
         uint256[] memory _patientIDs,
         uint256 _studyID,
-        bytes32[] memory categorysfromquery,
+        bytes32  categorysfromquery,
         bytes32[] memory elementsfromquery,
-        bytes32[] memory categorysforElementFromquery,
+        uint256[] memory categorysforElementFromquery,
         int256 _endTime
     ) public view returns (uint256[] memory) {
        // Patient memory patient;
@@ -178,6 +188,7 @@ contract DynamicConsent {
             if (empty==false){
                 continue;
             }
+            satisfied=false;
             satisfied=checkConsent(index,_patientIDs[i],_studyID,categorysfromquery,elementsfromquery,categorysforElementFromquery);
             if(satisfied){
                 PatientIDs[counter]=(_patientIDs[i]);
@@ -194,27 +205,29 @@ contract DynamicConsent {
         return PatientIDs;
     }
     //判断该档案dataBase[_studyID][_patientIDs[i]].consent[index];是否满足条件
-    function checkConsent(uint256 _index,uint256 _patitentID,uint256 _studyID,  bytes32[] memory categorysfromquery, bytes32[] memory elementsfromquery,bytes32[] memory categorysforElementFromquery)public view returns(bool){
+    function checkConsent(uint256 _index,uint256 _patitentID,uint256 _studyID,  bytes32 categorysfromquery, bytes32[] memory elementsfromquery,uint256[] memory categorysforElementFromquery)public view returns(bool){
         Consent memory consent;
         bool categoryexist;
         uint256 counter0;
         uint256 counter1;
+        bytes32 result;
         consent=dataBase[_studyID][_patitentID][_index];
            
-                categoryexist = verifyexistenceOFcategory(
-                    categorysfromquery,
-                    consent.categoryChoices
-                );
-                counter0=verifyexistenceOFcategoryForElement(categorysforElementFromquery, consent.categoryChoices);
-                counter1 = verifyexistenceOFelement(
+        result=categorysfromquery|consent.categoryChoices;
+        if(result==0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)categoryexist=true;
+        if(elementsfromquery.length!=0){
+        counter0=verifyexistenceOFcategoryForElement(categorysforElementFromquery, consent.categoryChoices);
+        counter1 = verifyexistenceOFelement(
                     elementsfromquery,
                     consent.elementChoices
                 );
-                if (categoryexist&&((counter0+counter1)>=elementsfromquery.length)) {
+        }
+         if (categoryexist&&((counter0+counter1)>=elementsfromquery.length)) {
                     return true;
                 }else{
                     return false;
                 }
+        
                 
     }
     //bool用于判断patient是否为空
@@ -230,9 +243,9 @@ contract DynamicConsent {
         if(_endTime<0){
             return (length-1,true);
         }else{
-        for(uint256 i=length-1;i>=0;i--){
-            if(patient[i].recordTime<=uint256(_endTime)){
-                return (i,true);
+        for(uint256 i=length;i>0;i--){
+            if(patient[i-1].recordTime<=uint256(_endTime)){
+                return (i-1,true);
             }
         }
         }
@@ -242,27 +255,23 @@ contract DynamicConsent {
     function decodePatientID(
         uint256 _studyID
     ) public view returns (uint256[] memory) {
-        bytes32 chunk = bytes32(uint256(65535));
+        bytes32 chunk = bytes32(uint256(4294967295));
         bytes32[] memory patientIDsEncode = patientsOfStudy[_studyID]
             .patientIDs;
         uint256 length = patientIDsEncode.length;
-        uint256 patientID;
-        bool[2 ** 16 - 1] memory isPresent;
+        uint256 patientID; 
         uint256 counter;
         uint256[] memory patientIDs = new uint256[](
-            16 * patientIDsEncode.length
+            8 * patientIDsEncode.length
         );
         for (uint i = 0; i < length; i++) {
-            for (uint j = 0; j < 16; j++) {
+            for (uint j = 0; j < 8; j++) {
                 patientID = uint256(
-                    (patientIDsEncode[i] >> (16 * j)) & (chunk)
+                    (patientIDsEncode[i] >> (32 * j)) & (chunk)
                 );
                 if(patientID==0)break;
-                if (!isPresent[patientID]) {
-                    patientIDs[counter] = patientID;
-                    isPresent[patientID] = true;
-                    counter++;
-                }
+                patientIDs[counter] = patientID;
+                counter++;
             }
             if(patientID==0)break;
         }
@@ -275,45 +284,15 @@ contract DynamicConsent {
         return patientIDs;
     }
 
-    function verifyexistenceOFcategory(
-        bytes32[] memory categoryNeeded,
-        bytes32 catogorysInDatabase
-    ) public pure returns (bool yes) {
-        bytes32 category;
-        bool exist=false;
-        bytes32 zero;
-        for (uint n = 0; n < categoryNeeded.length; n++) {
-            exist=false;
-            for (uint k = 0; k < 32; k += 1) {
-            category = bytes32(catogorysInDatabase[k]);
-            if(category==zero)break;
-                if (category == categoryNeeded[n]) {
-                   exist=true;
-                   break;
-                }
-            }
-            if (exist==false){
-                return false;
-            }
-        }
-        return true;
-    }
+
     function verifyexistenceOFcategoryForElement(
-        bytes32[] memory categoryNeeded,
+        uint256[] memory categoryNeeded,
         bytes32 catogorysInDatabase
     ) public pure returns (uint256) {
-        bytes32 category;
+        uint256 length=categoryNeeded.length;
         uint256 counterOfSatisfied=0;
-        bytes32 zero;
-        for (uint n = 0; n < categoryNeeded.length; n++) {
-            for (uint k = 0; k < 32; k += 1) {
-            category = bytes32(catogorysInDatabase[k]);
-            if(category==zero)break;
-                if (category == categoryNeeded[n]) {
-                   counterOfSatisfied+=1;
-                   break;
-                }
-            }
+        for (uint n = 0; n < length; n++) {
+            if(catogorysInDatabase[categoryNeeded[n]]!=0)counterOfSatisfied++;
         }
         return counterOfSatisfied;
     }
@@ -361,22 +340,28 @@ contract DynamicConsent {
 
     //处理categorySharingChoices这个string数组，生成编码好的bytes32并返回
     function handlecategorySharingChoices(
-        string[] calldata categorySharingChoices
-    ) public returns (bytes32) {
-        bytes32 result;
+        string[] memory categorySharingChoices
+    ) public returns (bytes32,bytes32) {
+       
         bytes32 shortnumber;
         bytes memory q;
+        uint256 number;
+        bytes32 result;
+        bytes32 resultForNum;
+        bytes32 chunk=0xff00000000000000000000000000000000000000000000000000000000000000;
+
         for (uint i = 0; i < categorySharingChoices.length; i++) {
-            shortnumber = getPrefixBytes32forCategory(
+            (shortnumber,number) = getPrefixBytes32forCategory(
                 categorySharingChoices[i]
             );
-            result |= shortnumber >> (i * 8);
+            result |= chunk >> (number * 8);
+            resultForNum|=shortnumber>> (i * 8);
             q = bytes(extendCategorys[shortnumber]);
             if (q.length == 0) {
                 extendCategorys[shortnumber] = categorySharingChoices[i];
             }
         }
-        return result;
+        return (result,resultForNum);
     }
 
     //处理elementSharingChoices这个string数组，生成编码好的bytes32并返回
@@ -422,7 +407,7 @@ contract DynamicConsent {
     //注：uint256(0x01)<<2 | uint256(0x04) = 0x104 = 260  bytes32(260）=0x0000000000000000000000000000000000000000000000000000000000000104
     function getPrefixBytes32forCategory(
         string memory s
-    ) public pure returns (bytes32) {
+    ) public pure returns (bytes32,uint256) {
         bytes memory b = bytes(s);
         uint b1 = 0;
         uint b2 = 0;
@@ -430,14 +415,39 @@ contract DynamicConsent {
         b1 = uint8(b[0])-48;
         b2 = uint8(b[1])-48;
         b1 = b1*10+b2;
-        return bytes32((b1 << 248));
+        return (bytes32((b1 << 248)),b1);
+    }
+ function getPrefixBytes32forCategoryToinput(
+        string memory s
+    ) public pure returns (uint256) {
+        bytes memory b = bytes(s);
+        uint b1 = 0;
+        uint b2 = 0;
+        // 取出第一个数字
+        b1 = uint8(b[0])-48;
+        b2 = uint8(b[1])-48;
+        b1 = b1*10+b2;
+        return b1;
+    }
+       //注：uint256(0x01)<<2 | uint256(0x04) = 0x104 = 260  bytes32(260）=0x0000000000000000000000000000000000000000000000000000000000000104
+    function getPrefixBytes32forCategoryForelement(
+        string memory s
+    ) public pure returns (uint256) {
+        bytes memory b = bytes(s);
+        uint256 b1 = 0;
+        uint256 b2 = 0;
+        // 取出第一个数字
+        b1 = uint8(b[0])-48;
+        b2 = uint8(b[1])-48;
+        b1 = b1*10+b2;
+        return b1;
     }
 
     //插入patientID到patientsOfStudy中
     function insertPatientID(uint256 _patientID, uint256 _studyID) public {
         uint256 flag = patientsOfStudy[_studyID].flag;
 
-        if (flag <= 15) {
+        if (flag <= 7) {
             uint256 length = patientsOfStudy[_studyID].patientIDs.length;
             if (length == 0) {
                 patientsOfStudy[_studyID].patientIDs.push(bytes32(_patientID));
@@ -447,7 +457,7 @@ contract DynamicConsent {
                 ];
                 patientsOfStudy[_studyID].patientIDs[length - 1] =
                     patientIDs |
-                    (bytes32(_patientID) << (16 * flag));
+                    (bytes32(_patientID) << (32 * flag));
             }
             patientsOfStudy[_studyID].flag = flag + 1;
         } else {
@@ -462,18 +472,20 @@ contract DynamicConsent {
         int256 _startTime,
         int256 _endTime
     ) public view returns (string memory output) {
+        uint256[] memory studyIDs;
+        Consent[] memory patient2;
         if (_startTime == -1) {
             _startTime = 0;
         }
         if (_endTime == -1) {
-            _endTime = 9999999999;
+            _endTime = 99999999999;
         }
         if (_studyID == -1) {
-            for (uint256 i = 0; i <= MaxStudyID; i++) {
-                if (dataBase[i][_patientID].length > 0) {
-                        Consent[] memory patient2 = dataBase[i][_patientID];
-
-                    for (uint256 j = 0; j < patient2.length; j++) {
+            studyIDs=studyIDofPatient[_patientID];
+            uint256 lengthOfStudy=studyIDs.length;
+            for (uint256 i = 0; i <lengthOfStudy; i++) {
+                patient2 = dataBase[studyIDs[i]][_patientID];
+                for (uint256 j = 0; j < patient2.length; j++) {
                         if (
                             uint256(_startTime) <=
                             patient2[j].recordTime &&
@@ -482,14 +494,14 @@ contract DynamicConsent {
                             output = string(
                                 abi.encodePacked(
                                     output,
-                                    getConsentString(i, patient2[j])
+                                    getConsentString(studyIDs[i], patient2[j])
                                 )
                             );
                        
                         }
                     }
-                }
             }
+
         } else {
             Consent[] memory patient3 = dataBase[uint256(_studyID)][
                     _patientID
@@ -525,7 +537,7 @@ contract DynamicConsent {
                 ",",
                 uint2str(c.recordTime),
                 ",[",
-                stringToFullCategoryChoices(c.categoryChoices),
+                stringToFullCategoryChoices(c.categoryChoicesNum),
                 "],[",
                 stringToFullElementChoices(c.elementChoices),
                 "]\n"
@@ -610,7 +622,7 @@ contract DynamicConsent {
         bytes32 zero;
         uint256 j;
         bytes32[] memory a = new bytes32[](16);
-        for (uint i = 0; i < 16; i += 2) {
+        for (uint i = 0; i < 32; i += 2) {
             // 取出第一个数字
             b1 = bytes32(b[i]);
             //取出第二个数字
@@ -650,10 +662,5 @@ contract DynamicConsent {
             mstore(oldLengthPtr, counter)
         }
         return a;
-    }
-    function getPatient(uint256 studyID,uint256 PatientID) public returns (Consent[] memory){
-        Consent[] memory output;
-        output=dataBase[studyID][PatientID];
-        return output;
     }
 }
