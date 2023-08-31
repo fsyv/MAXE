@@ -610,7 +610,7 @@ contract DynamicConsentLarger {
         bytes32 zero;
         uint256 j;
         bytes32[] memory a = new bytes32[](16);
-        for (uint i = 0; i < 16; i += 2) {
+        for (uint i = 0; i < 32; i += 2) {
             // 取出第一个数字
             b1 = bytes32(b[i]);
             //取出第二个数字
