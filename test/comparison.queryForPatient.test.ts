@@ -5,17 +5,17 @@ import {
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { DynamicConsent } from "../typechain-types";
+import { DynamicConsentLarger } from "../typechain-types";
 const fs = require("fs");
 import { storeRecord, queryForResearcher, queryForPatient } from "../scripts/DynamicConsent"
 
-describe("DynamicConsent", function () {
-    let dynamicConsent: DynamicConsent;
+describe("DynamicConsentLarger", function () {
+    let dynamicConsent: DynamicConsentLarger;
 
     before(async function () {
         // 部署合约
         console.log("Deploying...");
-        dynamicConsent = await ethers.deployContract("DynamicConsent");
+        dynamicConsent = await ethers.deployContract("DynamicConsentLarger");
         await dynamicConsent.waitForDeployment();
         console.log(
             `Contract deployed to ${dynamicConsent.target}`
@@ -107,8 +107,8 @@ describe("DynamicConsent", function () {
                     )
 
 
-                    console.error("queryForResearcher_" + dataset + "_" + i + " solidity: " + result);
-                    console.error("queryForResearcher_" + dataset + "_" + i + " hardhat : " + result_ts);
+                    console.error("queryForPatient_" + dataset + "_" + i + " solidity: " + result);
+                    console.error("queryForPatient_" + dataset + "_" + i + " hardhat : " + result_ts);
 
                     let content = "Input: " +
                         researcher_queries[i]["patientID"] + ", " +
