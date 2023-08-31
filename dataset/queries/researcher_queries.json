@@ -1,51 +1,78 @@
 [
-{
- "studyID": 42,
- "timestamp": -1,
- "categorySharingChoices": [],
-"elementSharingChoices": []
-},
-{
-        "studyID": 42,
-        "timestamp": -1,
-        "categorySharingChoices": [
-                "01_Family Health History",
-                "02_Current or Previous Disease or Condition",
-                "03_Living Environment and Lifestyle",
-                "05_Socioeconomic Status",
-                "06_Health Care Encounter",
-                "07_Laboratory Test Results"
-        ],
-        "elementSharingChoices": [
-
+        {
+         "studyID": 42,
+         "timestamp": -1,
+         "categorySharingChoices": [],
+        "elementSharingChoices": []
+        },
+        {
+                "studyID": 42,
+                "timestamp": -1,
+                "categorySharingChoices": [
+                        "01_Family Health History",
+                        "02_Current or Previous Disease or Condition",
+                        "03_Living Environment and Lifestyle",
+                        "05_Socioeconomic Status",
+                        "06_Health Care Encounter",
+                        "07_Laboratory Test Results"
+                ],
+                "elementSharingChoices": [
+        
+                ]
+               },
+        {
+         "studyID": 3,
+         "timestamp": 1641053693,
+         "categorySharingChoices": [
+          "03_Living Environment and Lifestyle",
+          "04_Biospecimen",
+          "05_Socioeconomic Status",
+          "07_Laboratory Test Results"
+         ],
+         "elementSharingChoices": [
+          "01_02_Mental health disease or condition",
+          "01_03_Sexual or reproductive disease or condition"
+         ]
+        },
+        
+        {
+         "studyID": 29,
+         "timestamp": 1641915860,
+         "categorySharingChoices": [
+          "01_Family Health History",
+          "02_Current or Previous Disease or Condition",
+          "03_Living Environment and Lifestyle",
+          "05_Socioeconomic Status",
+          "06_Health Care Encounter",
+          "07_Laboratory Test Results"
+         ],
+         "elementSharingChoices": []
+        },
+        {
+                "studyID": 66,
+                "timestamp": 1641915860,
+                "categorySharingChoices": [
+                 "01_Family Health History",
+                 "02_Current or Previous Disease or Condition",
+                 "03_Living Environment and Lifestyle",
+                 "05_Socioeconomic Status",
+                 "06_Health Care Encounter",
+                 "07_Laboratory Test Results"
+                ],
+                "elementSharingChoices": []
+               },
+               {
+                "studyID": 99,
+                "timestamp": 1641915860,
+                "categorySharingChoices": [
+                 "01_Family Health History",
+                 "02_Current or Previous Disease or Condition",
+                 "03_Living Environment and Lifestyle",
+                 "05_Socioeconomic Status",
+                 "06_Health Care Encounter",
+                 "07_Laboratory Test Results"
+                ],
+                "elementSharingChoices": []
+               }
         ]
-       },
-{
- "studyID": 3,
- "timestamp": 1641053693,
- "categorySharingChoices": [
-  "03_Living Environment and Lifestyle",
-  "04_Biospecimen",
-  "05_Socioeconomic Status",
-  "07_Laboratory Test Results"
- ],
- "elementSharingChoices": [
-  "01_02_Mental health disease or condition",
-  "01_03_Sexual or reproductive disease or condition"
- ]
-},
-
-{
- "studyID": 29,
- "timestamp": 1641915860,
- "categorySharingChoices": [
-  "01_Family Health History",
-  "02_Current or Previous Disease or Condition",
-  "03_Living Environment and Lifestyle",
-  "05_Socioeconomic Status",
-  "06_Health Care Encounter",
-  "07_Laboratory Test Results"
- ],
- "elementSharingChoices": []
-}
-]
+        

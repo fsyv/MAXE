@@ -23,9 +23,9 @@ import {
               // 加载数据集
               let datasets0: Array<string> = [
                 "./dataset/consents/1/training_data.json",
-               "./dataset/consents/2/training_data.json",
-                "./dataset/consents/3/training_data.json",
-                "./dataset/consents/4/training_data.json"
+              //  "./dataset/consents/2/training_data.json",
+              //   "./dataset/consents/3/training_data.json",
+              //   "./dataset/consents/4/training_data.json"
             ];
             for (let dataset of datasets0) {
                 console.log("Loading dataset: " + dataset);
@@ -49,8 +49,6 @@ import {
     
                 console.log(dataset + "_total: " + training_data.length + ", consume time: " + consumeTime + "ms, average time: " + consumeTime / training_data.length + "ms.");
             }
-            let a=await dynamicConsent.getPatient(42,6782);
-            console.log('a:',a)
       // let alldata=await dynamicConsent.dataBase;
       // console.log(alldata);
       //////////////////////////////////////////////

@@ -30,7 +30,10 @@ describe("DynamicConsent", function () {
         // ];
 
         let datasets: Array<string> = [
-            "./dataset/consents/1/training_data.json"
+            "./dataset/consents/1/training_data.json",
+        //     "./dataset/consents/2/training_data.json",
+        //     "./dataset/consents/3/training_data.json",
+        //    "./dataset/consents/4/training_data.json"
         ];
 
 
@@ -120,13 +123,13 @@ describe("DynamicConsent", function () {
                         " solidity: " + result_solidity + "\n\n" +
                         " hardhat : " + result_ts;
 
-                    fs.writeFile("./test/comparison.output.txt", content, (err) => {
-                        if (err) {
-                            console.error('Error writing to file:', err);
-                        } else {
-                            console.log('Content successfully written to file.');
-                        }
-                    });
+                    // fs.writeFile("./test/comparison.outputforReasercher.txt", content, (err) => {
+                    //     if (err) {
+                    //         console.error('Error writing to file:', err);
+                    //     } else {
+                    //         console.log('Content successfully written to file.');
+                    //     }
+                    // });
 
                     return;
                 }

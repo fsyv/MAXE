@@ -24,8 +24,8 @@ import {
               let datasets0: Array<string> = [
                 "./dataset/consents/1/training_data.json",
                "./dataset/consents/2/training_data.json",
-                "./dataset/consents/3/training_data.json",
-                "./dataset/consents/4/training_data.json"
+                // "./dataset/consents/3/training_data.json",
+                // "./dataset/consents/4/training_data.json"
             ];
             for (let dataset of datasets0) {
                 console.log("Loading dataset: " + dataset);
