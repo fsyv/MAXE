@@ -9,6 +9,7 @@ type Consent = {
 
 // studyID : patientID  : Consent[]
 const dataBase: Record<number, Record<number, Consent[]>> = {};
+dataBase[-1] = {};
 
 function preprocessing(
   _patientCategoryChoices: string[],
@@ -119,4 +120,52 @@ export function queryForResearcher(
   }
 
   return [...new Set(patientIDs)];
+}
+
+export function queryForPatient(
+  _patientID: number,
+  _studyID: number,
+  _startTimestamp: number,
+  _endTimestamp: number
+): string {
+
+
+  if (_endTimestamp == -1) {
+    _endTimestamp = Number.MAX_SAFE_INTEGER
+  }
+
+  let result: string = "";
+
+  if (_studyID == -1) {
+
+    for (const studyID in dataBase) {
+
+      if (dataBase.hasOwnProperty(studyID) && dataBase[studyID][_patientID]) {
+
+        const consents = dataBase[studyID][_patientID];
+        consents.sort((a: Consent, b: Consent) => a.recordTime - b.recordTime);
+        for (let consent of consents) {
+
+          if (consent.recordTime >= _startTimestamp && consent.recordTime <= _endTimestamp) {
+            result += `${studyID},${consent.recordTime},[${consent.patientCategoryChoices.join(",")}],[${consent.patientElementChoices.join(",")}]\n`;
+          }
+        }
+      }
+    }
+  }
+
+  if (!dataBase[_studyID] || !dataBase[_studyID][_patientID]) {
+    return result;
+  }
+
+  const consents = dataBase[_studyID][_patientID];
+  consents.sort((a: Consent, b: Consent) => a.recordTime - b.recordTime);
+  for (let consent of consents) {
+
+    if (consent.recordTime >= _startTimestamp && consent.recordTime <= _endTimestamp) {
+      result += `${_studyID},${consent.recordTime},[${consent.patientCategoryChoices.join(",")}],[${consent.patientElementChoices.join(",")}]\n`;
+    }
+  }
+
+  return result
 }
